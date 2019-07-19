@@ -412,6 +412,34 @@ class RNGoogleFit {
       })
   }
 
+
+  getWorkoutSamples(options, callback) {
+    googleFit.getWorkoutSamples(
+      Date.parse(options.startDate),
+      Date.parse(options.endDate),
+      error => {
+        callback(error, false);
+      },
+      res => {
+        callback(false, res);
+      }
+    )
+  }
+
+  saveWorkout(options, callback) {
+    googleFit.submitWorkout(
+      options.workoutType,
+      Date.parse(options.startDate),
+      Date.parse(options.endDate),
+      options.calories,
+      error => {
+        callback(error, false);
+      },
+      res => {
+        callback(false, res);
+      }
+    )
+  }
 }
 
 export default new RNGoogleFit()

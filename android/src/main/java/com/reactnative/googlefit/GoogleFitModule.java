@@ -32,7 +32,6 @@ import com.google.android.gms.fitness.data.DataType;
 import com.google.android.gms.fitness.data.HealthDataTypes;
 import com.facebook.react.bridge.WritableMap;
 
-
 public class GoogleFitModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
     private static final String REACT_MODULE = "RNGoogleFit";
@@ -44,7 +43,6 @@ public class GoogleFitModule extends ReactContextBaseJavaModule implements Lifec
         super(reactContext);
         this.mReactContext = reactContext;
     }
-
 
     @Override
     public String getName() {
@@ -97,9 +95,9 @@ public class GoogleFitModule extends ReactContextBaseJavaModule implements Lifec
     }
 
     @ReactMethod
-    public void isAuthorized (final Promise promise) {
+    public void isAuthorized(final Promise promise) {
         boolean isAuthorized = false;
-        if (mGoogleFitManager != null && mGoogleFitManager.isAuthorized() ) {
+        if (mGoogleFitManager != null && mGoogleFitManager.isAuthorized()) {
             isAuthorized = true;
         }
         WritableMap map = Arguments.createMap();
@@ -135,10 +133,8 @@ public class GoogleFitModule extends ReactContextBaseJavaModule implements Lifec
     }
 
     @ReactMethod
-    public void getDailyStepCountSamples(double startDate,
-                                         double endDate,
-                                         Callback errorCallback,
-                                         Callback successCallback) {
+    public void getDailyStepCountSamples(double startDate, double endDate, Callback errorCallback,
+            Callback successCallback) {
 
         try {
             mGoogleFitManager.getStepHistory().aggregateDataByDate((long) startDate, (long) endDate, successCallback);
@@ -148,65 +144,54 @@ public class GoogleFitModule extends ReactContextBaseJavaModule implements Lifec
     }
 
     @ReactMethod
-    public void getActivitySamples(double startDate,
-                                   double endDate,
-                                   Callback errorCallback,
-                                   Callback successCallback) {
+    public void getActivitySamples(double startDate, double endDate, Callback errorCallback, Callback successCallback) {
 
         try {
-            successCallback.invoke(mGoogleFitManager.getActivityHistory().getActivitySamples((long)startDate, (long)endDate));
+            successCallback.invoke(
+                    mGoogleFitManager.getActivityHistory().getActivitySamples((long) startDate, (long) endDate));
         } catch (IllegalViewOperationException e) {
             errorCallback.invoke(e.getMessage());
         }
     }
 
     @ReactMethod
-    public void getDailyDistanceSamples(double startDate,
-                                        double endDate,
-                                        Callback errorCallback,
-                                        Callback successCallback) {
+    public void getDailyDistanceSamples(double startDate, double endDate, Callback errorCallback,
+            Callback successCallback) {
 
         try {
-            successCallback.invoke(mGoogleFitManager.getDistanceHistory().aggregateDataByDate((long) startDate, (long) endDate));
+            successCallback.invoke(
+                    mGoogleFitManager.getDistanceHistory().aggregateDataByDate((long) startDate, (long) endDate));
         } catch (IllegalViewOperationException e) {
             errorCallback.invoke(e.getMessage());
         }
     }
 
     @ReactMethod
-    public void getWeightSamples(double startDate,
-                                 double endDate,
-                                 Callback errorCallback,
-                                 Callback successCallback) {
+    public void getWeightSamples(double startDate, double endDate, Callback errorCallback, Callback successCallback) {
 
         try {
             BodyHistory bodyHistory = mGoogleFitManager.getBodyHistory();
             bodyHistory.setDataType(DataType.TYPE_WEIGHT);
-            successCallback.invoke(bodyHistory.getHistory((long)startDate, (long)endDate));
+            successCallback.invoke(bodyHistory.getHistory((long) startDate, (long) endDate));
         } catch (IllegalViewOperationException e) {
             errorCallback.invoke(e.getMessage());
         }
     }
 
     @ReactMethod
-    public void getHeightSamples(double startDate,
-                                 double endDate,
-                                 Callback errorCallback,
-                                 Callback successCallback) {
+    public void getHeightSamples(double startDate, double endDate, Callback errorCallback, Callback successCallback) {
 
         try {
             BodyHistory bodyHistory = mGoogleFitManager.getBodyHistory();
             bodyHistory.setDataType(DataType.TYPE_HEIGHT);
-            successCallback.invoke(bodyHistory.getHistory((long)startDate, (long)endDate));
+            successCallback.invoke(bodyHistory.getHistory((long) startDate, (long) endDate));
         } catch (IllegalViewOperationException e) {
             errorCallback.invoke(e.getMessage());
         }
     }
 
     @ReactMethod
-    public void saveHeight(ReadableMap heightSample,
-                           Callback errorCallback,
-                           Callback successCallback) {
+    public void saveHeight(ReadableMap heightSample, Callback errorCallback, Callback successCallback) {
 
         try {
             BodyHistory bodyHistory = mGoogleFitManager.getBodyHistory();
@@ -217,25 +202,20 @@ public class GoogleFitModule extends ReactContextBaseJavaModule implements Lifec
         }
     }
 
-
     @ReactMethod
-    public void getDailyCalorieSamples(double startDate,
-                                       double endDate,
-                                       boolean basalCalculation,
-                                       Callback errorCallback,
-                                       Callback successCallback) {
+    public void getDailyCalorieSamples(double startDate, double endDate, boolean basalCalculation,
+            Callback errorCallback, Callback successCallback) {
 
         try {
-            successCallback.invoke(mGoogleFitManager.getCalorieHistory().aggregateDataByDate((long) startDate, (long) endDate, basalCalculation));
+            successCallback.invoke(mGoogleFitManager.getCalorieHistory().aggregateDataByDate((long) startDate,
+                    (long) endDate, basalCalculation));
         } catch (IllegalViewOperationException e) {
             errorCallback.invoke(e.getMessage());
         }
     }
 
     @ReactMethod
-    public void saveFood(ReadableMap foodSample,
-                         Callback errorCallback,
-                         Callback successCallback) {
+    public void saveFood(ReadableMap foodSample, Callback errorCallback, Callback successCallback) {
         try {
             successCallback.invoke(mGoogleFitManager.getCalorieHistory().saveFood(foodSample));
         } catch (IllegalViewOperationException e) {
@@ -244,9 +224,7 @@ public class GoogleFitModule extends ReactContextBaseJavaModule implements Lifec
     }
 
     @ReactMethod
-    public void saveWeight(ReadableMap weightSample,
-                           Callback errorCallback,
-                           Callback successCallback) {
+    public void saveWeight(ReadableMap weightSample, Callback errorCallback, Callback successCallback) {
 
         try {
             BodyHistory bodyHistory = mGoogleFitManager.getBodyHistory();
@@ -327,30 +305,50 @@ public class GoogleFitModule extends ReactContextBaseJavaModule implements Lifec
     }
 
     @ReactMethod
-    public void getBloodPressureSamples(double startDate,
-                                 double endDate,
-                                 Callback errorCallback,
-                                 Callback successCallback) {
+    public void getBloodPressureSamples(double startDate, double endDate, Callback errorCallback,
+            Callback successCallback) {
         try {
             HeartrateHistory heartrateHistory = mGoogleFitManager.getHeartrateHistory();
             heartrateHistory.setDataType(HealthDataTypes.TYPE_BLOOD_PRESSURE);
-            successCallback.invoke(heartrateHistory.getHistory((long)startDate, (long)endDate));
+            successCallback.invoke(heartrateHistory.getHistory((long) startDate, (long) endDate));
         } catch (IllegalViewOperationException e) {
             errorCallback.invoke(e.getMessage());
         }
     }
 
     @ReactMethod
-    public void getHeartRateSamples(double startDate,
-                                 double endDate,
-                                 Callback errorCallback,
-                                 Callback successCallback) {
+    public void getHeartRateSamples(double startDate, double endDate, Callback errorCallback,
+            Callback successCallback) {
 
         try {
             HeartrateHistory heartrateHistory = mGoogleFitManager.getHeartrateHistory();
             heartrateHistory.setDataType(DataType.TYPE_HEART_RATE_BPM);
-            successCallback.invoke(heartrateHistory.getHistory((long)startDate, (long)endDate));
+            successCallback.invoke(heartrateHistory.getHistory((long) startDate, (long) endDate));
         } catch (IllegalViewOperationException e) {
+            errorCallback.invoke(e.getMessage());
+        }
+    }
+
+    @ReactMethod
+    public void getWorkoutSamples(double startDate, double endDate, Callback errorCallback, Callback successCallback) {
+
+        try {
+            successCallback
+                    .invoke(mGoogleFitManager.getActivityHistory().getWorkoutSamples((long) startDate, (long) endDate));
+        } catch (IllegalViewOperationException e) {
+            errorCallback.invoke(e.getMessage());
+        }
+    }
+
+    @ReactMethod
+    public void submitWorkout(String workoutType, double startDate, double endDate, double calories,
+            Callback errorCallback, Callback successCallback) {
+
+        try {
+            mGoogleFitManager.getActivityHistory().submitWorkout(workoutType, (long) startDate, (long) endDate,
+                    (float) calories);
+            successCallback.invoke(true);
+        } catch (Exception e) {
             errorCallback.invoke(e.getMessage());
         }
     }

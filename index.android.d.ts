@@ -77,6 +77,10 @@ declare module "react-native-google-fit" {
 
         saveHeight: (options: any, callback: ((isError: boolean, result: any) => void)) => void;
 
+        getWorkoutSamples(options: any, callback: (isError: boolean, result: any) => void): void;
+
+        saveWorkout(options: any, callback: (isError: boolean, success: boolean) => void): void;
+
         deleteWeight: (options: any, callback: ((isError: boolean, result: any) => void)) => void;
 
         isAvailable(callback: ((isError: boolean, result: boolean) => void)): void;
@@ -97,7 +101,7 @@ declare module "react-native-google-fit" {
 
         lbsAndOzToK(imperial: any): any;
 
-        KgToLbs(metric: any): any;
+        KgToLbs(metric: any): any;     
     }
 
     export interface WeightSample {
